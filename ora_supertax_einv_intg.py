@@ -98,7 +98,10 @@ def load_config() -> tuple[FusionConfig, SuperTaxConfig]:
 # --------------------------------------------------------------------------
 
 def setup_logging() -> logging.Logger:
-    master_log_file = r"C:\Oracle_SuperTax_EInvoice_Intg\Logs\einvoice_integration_log.log"
+
+    log_dir = os.path.join(os.getcwd(), "Logs")
+    master_log_file = os.path.join(log_dir, "einvoice_integration_log.log")
+
     os.makedirs(os.path.dirname(master_log_file), exist_ok=True)
     
     logger = logging.getLogger("einvoice")
@@ -608,7 +611,7 @@ class SuperTaxClient:
             logger.error("SuperTax API response was not valid JSON")
             raise
 
-LOG_DIR_EINV = r"C:\Oracle_SuperTax_EInvoice_Intg\Logs\EInvoice"
+LOG_DIR_EINV = os.path.join(os.getcwd(), "Logs", "EInvoice")
 os.makedirs(LOG_DIR_EINV, exist_ok=True)
 
 def save_einv_log(doc_no: str, payload: Dict[str, Any], response: Any = None, error: str = None) -> None:
